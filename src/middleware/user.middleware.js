@@ -1,6 +1,11 @@
 const bcrypt = require('bcryptjs')
 const { getUserInfo } = require('../service/user.service')
-const { userFormateError, userAlreadyExisted } = require('../constant/err.type')
+const { userFormateError,
+    userAlreadyExisted,
+    userDoesNotExist,
+    userLoginError,
+    userPasswordError
+} = require('../constant/err.type')
 const userValidator = async (ctx, next) => {
     const { user_name, password } = ctx.request.body
     if (!user_name || !password) {
@@ -41,9 +46,32 @@ const cryptPassword = async (ctx, next) => {
     await next()
 }
 
+const verifyLogin = async (ctx, next) => {
+    const { user_name, password } = ctx.request.body
+    try {
+        const res = await getUserInfo({ user_name })
+        // 01.判断用户是否存在
+        if (!res) {
+            console.error('用户名不存在', { user_name })
+            return ctx.app.emit('error', userDoesNotExist, ctx)
 
+        }
+        // 02.密码是否匹配
+        if (!bcrypt.compareSync(password, res.password)) {
+            console.error('用户密码错误', { password })
+            return ctx.app.emit('error', userPasswordError, ctx)
+
+        }
+    } catch (error) {
+        console.error(error)
+        ctx.app.emit('error', userLoginError, ctx)
+        return
+    }
+    await next()
+}
 module.exports = {
     userValidator,
     verifyUser,
-    cryptPassword
+    cryptPassword,
+    verifyLogin
 }
