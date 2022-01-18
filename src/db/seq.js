@@ -9,11 +9,10 @@ const seq = new Sequelize(MYSQL_DB, MYSQL_USER, MYSQL_PWD, {
     dialect: 'mysql',
 })
 
-
 module.exports = seq
 // 测试连接是否正确
 seq.authenticate().then(res => {
-    console.log('success')
+    console.log('数据库连接成功')
 }).catch(err => {
-    console.log(err)
+    console.log(err + '数据库连接失败')
 })
