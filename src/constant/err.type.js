@@ -22,11 +22,21 @@ module.exports = {
     userLoginError: {
         code: '10005',
         message: '用户登录失败',
-        result: ''
+        result: '' 
     },
     userPasswordError: {
         code: '10006',
         message: '用户密码错误',
+        result: ''
+    },
+    tokenExpiredError: {
+        code: '10101',
+        message: 'token过期',
+        result: ''
+    },
+    jsonWebTokenError:{
+        code: '10102',
+        message: '无效的token',
         result: ''
     }
 }
