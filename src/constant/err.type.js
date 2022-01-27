@@ -22,7 +22,7 @@ module.exports = {
     userLoginError: {
         code: '10005',
         message: '用户登录失败',
-        result: '' 
+        result: ''
     },
     userPasswordError: {
         code: '10006',
@@ -34,9 +34,19 @@ module.exports = {
         message: 'token过期',
         result: ''
     },
-    jsonWebTokenError:{
+    jsonWebTokenError: {
         code: '10102',
         message: '无效的token',
+        result: ''
+    },
+    hasNotAdminPermission: {
+        code: '10103',
+        message: '没有管理员权限',
+        result: ''
+    },
+    flieUploadError: {
+        code: '10101',
+        message: '文件上传出错',
         result: ''
     }
 }
